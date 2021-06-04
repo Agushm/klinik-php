@@ -6,6 +6,8 @@ session_start();
 			$data = mysqli_fetch_assoc($result);
 			$new_no_kunjungan = mysqli_insert_id($server);
 			mysqli_query($server,"INSERT INTO periksa set  no_kunjungan = '".$new_no_kunjungan."'")or die ("error insert: ".mysqli_error());
+			$new_id_periksa = mysqli_insert_id($server);
+			mysqli_query($server,"INSERT INTO diagnosa set  id_periksa = '".$new_id_periksa."'")or die ("error insert: ".mysqli_error());
 			
 			echo "<meta http-equiv='refresh' content='0; url=?menu=kunjungan'>";
 			echo "<center><div class='alert alert-success alert-dismissable'>
