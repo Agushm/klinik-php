@@ -1,12 +1,18 @@
 <?php
 if($_GET["aksi"] && $_GET["nmr"]){
+
 include_once("../library/koneksi.php");
-$edit = mysqli_query("select * from tindakan where kd_tindakan='".$_GET["nmr"]."'");
+$edit = mysqli_query($server,"SELECT * from periksa LEFT JOIN tindakan ON tindakan.id_periksa=periksa.id_periksa WHERE periksa.id_periksa='".$_GET["nmr"]."'")or die("Error get periksa".mysqli_error());
 $editDb = mysqli_fetch_assoc($edit);
+
 	if($_POST["tdk"]){
 			include_once("../library/koneksi.php");
-			mysqli_query("update tindakan set nm_tindakan='".$_POST["nama"]."', ket='".$_POST["ket"]."' where kd_tindakan='".$_GET["nmr"]."'");
-			echo "<meta http-equiv='refresh' content='0; url=?menu=tindakan'>";
+			if($editDb["id_periksa"]==null){
+				mysqli_query($server,"INSERT INTO tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."', id_periksa='".$_GET["nmr"]."'")or die("Query Error Insert".mysqli_error());
+			}else{
+				mysqli_query($server,"UPDATE tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
+			}
+			echo "<meta http-equiv='refresh' content='0; url=?menu=periksa'>";
 			echo "<center><div class='alert alert-success alert-dismissable'>
                   <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
 					<b>Berhasil mengedit data!!</b>
@@ -21,9 +27,15 @@ $editDb = mysqli_fetch_assoc($edit);
 		<div class="body">
 			<form action="" method="post" class="form-horizontal">
 						<div class="form-group">
+							<label class="control-label col-lg-4">No Pemeriksaan</label>
+							<div class="col-lg-4">
+								<input type="text" value="<?php echo $_GET['nmr'];?>" required name="id_periksa" class="form-control" disabled/>
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="control-label col-lg-4">Nama Tindakan</label>
 							<div class="col-lg-4">
-								<input type="text" value="<?php echo $editDb["nm_tindakan"];?>" required name="nama" class="form-control" />
+								<input type="text" value="<?php echo $editDb["nm_tindakan"];?>" required name="nm_tindakan" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">

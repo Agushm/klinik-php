@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 04, 2021 at 10:20 AM
+-- Generation Time: Jun 04, 2021 at 04:04 PM
 -- Server version: 10.3.29-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -154,7 +154,7 @@ CREATE TABLE `periksa` (
 
 INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `napas`, `bb`, `keluhan`, `kd_diagnosa`, `kd_tindakan`, `created_at`, `update_at`, `daleted_at`) VALUES
 (1, 1, '120/80', '80 detak/menit', '80 °C', 'Normal', '80 kg', 'pusing, perut mual', '', '', '2021-06-03 16:14:38', '2021-06-03 16:14:38', NULL),
-(2, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
+(2, 10, '120/80', '80 detak/menit', '35 °C', 'ngap 2 kali', '60 kg', 'Gagal napas', NULL, NULL, '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -181,21 +181,13 @@ CREATE TABLE `resep_obt` (
 
 CREATE TABLE `tindakan` (
   `kd_tindakan` int(11) NOT NULL,
-  `id_periksa` int(10) NOT NULL,
-  `nm_tindakan` varchar(300) NOT NULL,
-  `ket` text NOT NULL,
+  `id_periksa` int(10) DEFAULT NULL,
+  `nm_tindakan` varchar(300) DEFAULT NULL,
+  `ket` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT current_timestamp()
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tindakan`
---
-
-INSERT INTO `tindakan` (`kd_tindakan`, `id_periksa`, `nm_tindakan`, `ket`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(9, 0, '99.21', 'Injeksi Anti Biotik', '2021-06-03 14:05:04', '2021-06-03 14:05:04', '2021-06-03 14:05:04'),
-(11, 0, '99.18', 'INFUS', '2021-06-03 14:05:04', '2021-06-03 14:05:04', '2021-06-03 14:05:04');
 
 -- --------------------------------------------------------
 
@@ -301,7 +293,7 @@ ALTER TABLE `resep_obt`
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

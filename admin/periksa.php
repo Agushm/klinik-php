@@ -21,7 +21,7 @@ $max	 = ceil($jml/$row);
 						<th>No</th>
 						<th>Nama Pasien</th>
 						<th>TTD</th>
-						<th>ND</th>
+						<th>Nadi</th>
 						<th>Suhu</th>
 						<th>Pernapasan</th>
 						<th>BB</th>
@@ -64,10 +64,21 @@ $max	 = ceil($jml/$row);
 						}
 						?>
 						</td>
-						<td><?php echo $periksa['kd_tindakan'];?></td>
+						<td><?php 
+						include_once("../library/koneksi.php");
+						$query_tindakan = "SELECT * FROM tindakan WHERE id_periksa = '".$periksa["id_periksa"]."'";
+						$tindakan = mysqli_query($server,$query_tindakan) or die("Query Error get pasien".mysqli_error());
+
+						$data_tindakan = mysqli_fetch_assoc($tindakan);
+						if($data_tindakan == null ){
+							echo('-');
+						}else{
+						echo($data_tindakan["nm_tindakan"]." - ".$data_tindakan["ket"]);
+						}
+						?></td>
 						<td><a href="?menu=periksa_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Tambah Periksa'> <i class="icon-stethoscope icon-white"></i> </a></td>
 						<td><a href="?menu=diagnosa_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Tambah Diagnosa'> <i class="icon-stethoscope icon-white"></i> </a></td>
-						<td><a href="?menu=periksa_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Tambah Tindakan'> <i class="icon-stethoscope icon-white"></i> </a></td>
+						<td><a href="?menu=tindakan_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Tambah Tindakan'> <i class="icon-stethoscope icon-white"></i> </a></td>
 						<td>
 						  <div class='btn-group'>
 						  <a href="?menu=periksa_del&aksi=hapus&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Hapus Data Ini" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA PENTING INI ... ?')"><i class="icon-remove icon-white"></i></a> 
