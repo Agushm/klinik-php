@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 12, 2021 at 11:21 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Host: localhost:3306
+-- Generation Time: Jun 04, 2021 at 08:16 AM
+-- Server version: 10.3.29-MariaDB-0ubuntu0.20.04.1
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,36 +19,30 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gd_sirs`
+-- Database: `klinik`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dokter`
+-- Table structure for table `diagnosa`
 --
 
-CREATE TABLE `dokter` (
-  `kd_dokter` int(11) NOT NULL,
-  `kd_poli` int(11) NOT NULL,
-  `tgl_kunjungan` int(12) NOT NULL,
-  `kd_user` int(11) NOT NULL,
-  `nm_dokter` varchar(300) NOT NULL,
-  `sip` enum('pagi','siang','malam','') NOT NULL,
-  `tmpat_lhr` varchar(300) NOT NULL,
-  `no_tlp` varchar(14) NOT NULL,
-  `alamat` varchar(300) NOT NULL
+CREATE TABLE `diagnosa` (
+  `kd_diag` varchar(11) NOT NULL,
+  `id_periksa` int(10) NOT NULL,
+  `nm_diag` varchar(300) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `dokter`
+-- Dumping data for table `diagnosa`
 --
 
-INSERT INTO `dokter` (`kd_dokter`, `kd_poli`, `tgl_kunjungan`, `kd_user`, `nm_dokter`, `sip`, `tmpat_lhr`, `no_tlp`, `alamat`) VALUES
-(5, 2, 1410530415, 9, 'Maful Prayoga Arnandi', '', 'Banjarnegara', '0892112312', 'Punggelan, Banjarnegara'),
-(6, 2, 1410530573, 9, 'Rasya P Arnandi', '', '', '886789678966', 'Banjarnegara'),
-(7, 1, 2014, 10, 'Mama', '', '', '284924', 'Klapa'),
-(8, 1, 1410613435, 9, 'Bapa', '', '', '323', 'Kalimanah');
+INSERT INTO `diagnosa` (`kd_diag`, `id_periksa`, `nm_diag`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('I10', 0, 'Hypertension', '2021-06-03 14:11:27', '2021-06-03 14:11:27', '2021-06-03 14:11:27');
 
 -- --------------------------------------------------------
 
@@ -57,67 +51,25 @@ INSERT INTO `dokter` (`kd_dokter`, `kd_poli`, `tgl_kunjungan`, `kd_user`, `nm_do
 --
 
 CREATE TABLE `kunjungan` (
-  `tgl_kunjungan` date NOT NULL,
-  `no_pasien` int(11) NOT NULL,
-  `kd_poli` int(11) NOT NULL,
-  `jam_kunjungan` time NOT NULL,
-  `kd_kunjungan` int(12) NOT NULL
+  `no_kunjungan` int(10) NOT NULL,
+  `no_rm` varchar(10) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kunjungan`
 --
 
-INSERT INTO `kunjungan` (`tgl_kunjungan`, `no_pasien`, `kd_poli`, `jam_kunjungan`, `kd_kunjungan`) VALUES
-('2014-02-19', 16, 2, '06:44:00', 6),
-('2014-09-11', 19, 2, '01:37:00', 7),
-('2014-09-11', 22, 1, '05:21:00', 8),
-('2014-09-11', 18, 1, '05:05:00', 9),
-('2014-09-11', 20, 2, '05:20:00', 10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `laboratorium`
---
-
-CREATE TABLE `laboratorium` (
-  `kd_lab` int(11) NOT NULL,
-  `no_rm` int(11) NOT NULL,
-  `hasil_lab` varchar(300) NOT NULL,
-  `ket` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `laboratorium`
---
-
-INSERT INTO `laboratorium` (`kd_lab`, `no_rm`, `hasil_lab`, `ket`) VALUES
-(4, 6, 'Berhasil', 'Berhasil Uji Laborat'),
-(5, 6, 'Gagal', 'Kekurangan Peralatan'),
-(6, 6, 'Berhasil', 'Berhasil melakukan uji coba.'),
-(7, 5, 'Berhasil Uji Coba', 'Pengujian kadar gula darah pada pasien');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login`
---
-
-CREATE TABLE `login` (
-  `kd_user` int(11) NOT NULL,
-  `username` varchar(300) NOT NULL,
-  `password` varchar(300) NOT NULL,
-  `nama` varchar(20) NOT NULL,
-  `alamat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `login`
---
-
-INSERT INTO `login` (`kd_user`, `username`, `password`, `nama`, `alamat`) VALUES
-(9, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Maful P Arnandi', 'Klapa, Punggelan, Banjarnegara.');
+INSERT INTO `kunjungan` (`no_kunjungan`, `no_rm`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'RM000001', '2021-06-03 15:59:27', '2021-06-03 15:59:27', NULL),
+(3, 'RM000002', '2021-06-03 16:09:18', '2021-06-03 16:09:18', NULL),
+(6, 'RM000001', '2021-06-03 16:28:32', '2021-06-03 16:28:32', NULL),
+(7, 'RM000001', '2021-06-03 16:28:43', '2021-06-03 16:28:43', NULL),
+(8, 'RM000001', '2021-06-03 16:33:07', '2021-06-03 16:33:07', NULL),
+(9, 'RM000001', '2021-06-03 16:34:25', '2021-06-03 16:34:25', NULL),
+(10, 'RM000001', '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -126,21 +78,22 @@ INSERT INTO `login` (`kd_user`, `username`, `password`, `nama`, `alamat`) VALUES
 --
 
 CREATE TABLE `obat` (
-  `kd_obat` int(11) NOT NULL,
-  `nm_obat` varchar(300) NOT NULL,
-  `jml_obat` int(11) NOT NULL,
-  `ukuran` int(11) NOT NULL,
-  `harga` int(25) NOT NULL
+  `kd_obat` varchar(10) NOT NULL,
+  `nm_obat` varchar(30) NOT NULL,
+  `ukuran` int(20) NOT NULL,
+  `ket` varchar(30) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `update_at` timestamp NULL DEFAULT current_timestamp(),
+  `delete_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`kd_obat`, `nm_obat`, `jml_obat`, `ukuran`, `harga`) VALUES
-(1, 'Paracetamol', 10, 10, 10000),
-(4, 'Jamu kamu', 20, 2, 200000),
-(5, 'Komik', 200, 1, 1000);
+INSERT INTO `obat` (`kd_obat`, `nm_obat`, `ukuran`, `ket`, `created_at`, `update_at`, `delete_at`) VALUES
+('OBT001', 'Sinovac', 500, 'Vaksin Covid', '2021-06-03 15:18:07', '2021-06-03 15:18:07', NULL),
+('OBT002', 'Pil Koplo edited', 100, 'Dapat menyebabkan pusing', '2021-06-03 15:31:44', '2021-06-03 15:31:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -149,15 +102,15 @@ INSERT INTO `obat` (`kd_obat`, `nm_obat`, `jml_obat`, `ukuran`, `harga`) VALUES
 --
 
 CREATE TABLE `pasien` (
-  `no_pasien` int(11) NOT NULL,
+  `no_rm` varchar(11) NOT NULL,
   `nm_pasien` varchar(300) NOT NULL,
   `j_kel` varchar(100) NOT NULL,
   `agama` varchar(100) NOT NULL,
   `alamat` varchar(300) NOT NULL,
   `tgl_lhr` date NOT NULL,
-  `usia` int(3) NOT NULL,
-  `no_tlp` int(14) NOT NULL,
-  `nm_kk` varchar(300) NOT NULL,
+  `ktp` varchar(16) NOT NULL,
+  `no_tlp` varchar(12) NOT NULL,
+  `nm_kel` varchar(20) NOT NULL,
   `hub_kel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -165,64 +118,57 @@ CREATE TABLE `pasien` (
 -- Dumping data for table `pasien`
 --
 
-INSERT INTO `pasien` (`no_pasien`, `nm_pasien`, `j_kel`, `agama`, `alamat`, `tgl_lhr`, `usia`, `no_tlp`, `nm_kk`, `hub_kel`) VALUES
-(16, 'Meni Riatri', 'Wanita', 'Islam', 'Punggelan', '1996-01-06', 18, 123123, 'Sugiarso Sudir', 'Anak Kandung'),
-(18, 'Anggit Pratitis', 'Pria', 'Islam', 'Punggelan', '1996-01-06', 18, 123123, 'Sugiarso Sudir', 'Anak Kandung'),
-(19, 'Dea Melinda Utami', 'Wanita', 'Islam', 'Punggelan', '2013-01-06', 1, 123123, 'David', 'Anak Kandung'),
-(20, 'David', 'Pria', 'Islam', 'Punggelan', '1986-01-06', 24, 123123, 'Prayit', 'Anak Kandung'),
-(21, 'Tetuko Abdi Maknapara Faisal', 'Pria', 'Islam', 'Banjar Kulon', '1998-01-06', 16, 2147483647, 'Faisal', 'Anak Kandung'),
-(22, 'Azhar Fadillah', 'Pria', 'Islam', 'Pucang', '1998-05-01', 16, 123123, 'Fadil', 'Anak Kandung'),
-(23, 'Catur Fery Cahyanto', 'Pria', 'Islam', 'Mandiraja', '1998-05-05', 16, 2147483647, 'Fery', 'Anak Kandung');
+INSERT INTO `pasien` (`no_rm`, `nm_pasien`, `j_kel`, `agama`, `alamat`, `tgl_lhr`, `ktp`, `no_tlp`, `nm_kel`, `hub_kel`) VALUES
+('RM000001', 'anita', 'Pria', 'Islam', 'Jl.sudirman no 90', '2000-09-12', '', '089732100018', 'septian', 'Anak Kandung'),
+('RM000002', 'anta', 'Pria', 'Islam', 'surakarta', '2000-09-23', '', '082316723421', 'susanto', 'Anak Kandung'),
+('RM0003', 'deni', 'Pria', 'Islam', 'jl. mawar no 9', '2000-09-12', '', '086518900123', 'tono', 'Anak Kandung');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `poliklinik`
+-- Table structure for table `periksa`
 --
 
-CREATE TABLE `poliklinik` (
-  `kd_poli` int(11) NOT NULL,
-  `nm_poli` varchar(300) NOT NULL,
-  `lantai` int(11) NOT NULL
+CREATE TABLE `periksa` (
+  `id_periksa` int(10) NOT NULL,
+  `no_kunjungan` int(10) NOT NULL,
+  `tensi` varchar(10) DEFAULT NULL,
+  `nadi` varchar(10) DEFAULT NULL,
+  `suhu` varchar(10) DEFAULT NULL,
+  `napas` varchar(10) DEFAULT NULL,
+  `bb` varchar(10) DEFAULT NULL,
+  `keluhan` varchar(30) DEFAULT NULL,
+  `kd_diagnosa` varchar(20) DEFAULT NULL,
+  `kd_tindakan` varchar(10) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `update_at` timestamp NULL DEFAULT current_timestamp(),
+  `daleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `poliklinik`
+-- Dumping data for table `periksa`
 --
 
-INSERT INTO `poliklinik` (`kd_poli`, `nm_poli`, `lantai`) VALUES
-(1, 'Poli Perut', 4),
-(2, 'Poli Hidung dan Tenggorokan', 1),
-(4, 'Poli Telinga', 3);
+INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `napas`, `bb`, `keluhan`, `kd_diagnosa`, `kd_tindakan`, `created_at`, `update_at`, `daleted_at`) VALUES
+(1, 1, 'embuh', 'embuh', 'embuh', 'embuh', 'embuh', 'pusing', '', '', '2021-06-03 16:14:38', '2021-06-03 16:14:38', NULL),
+(2, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rekam_medis`
+-- Table structure for table `resep_obt`
 --
 
-CREATE TABLE `rekam_medis` (
-  `no_rm` int(11) NOT NULL,
-  `kd_tindakan` int(11) NOT NULL,
-  `kd_obat` int(11) NOT NULL,
-  `kd_user` int(11) NOT NULL,
-  `no_pasien` int(11) NOT NULL,
-  `diagnosa` varchar(300) NOT NULL,
-  `resep` varchar(300) NOT NULL,
-  `keluhan` varchar(300) NOT NULL,
-  `tgl_pemeriksaan` int(12) NOT NULL,
-  `ket` text NOT NULL
+CREATE TABLE `resep_obt` (
+  `id_resep` int(11) NOT NULL,
+  `no_kunjungan` int(10) NOT NULL,
+  `kd_obat` varchar(10) NOT NULL,
+  `aturan` varchar(20) NOT NULL,
+  `takaran` varchar(30) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `rekam_medis`
---
-
-INSERT INTO `rekam_medis` (`no_rm`, `kd_tindakan`, `kd_obat`, `kd_user`, `no_pasien`, `diagnosa`, `resep`, `keluhan`, `tgl_pemeriksaan`, `ket`) VALUES
-(6, 2, 2, 2, 18, 'stadium', 'Infotermida', 'letih', 1410044752, 'sakit parah'),
-(8, 2, 2, 2, 19, 'terjangkit', 'Minum Obat', 'pusing kepala', 1410530415, 'sakit kentut'),
-(9, 5, 1, 9, 18, 'terjangkit', '3 kali sehari', 'Nyeri Otot', 1410530573, 'sasasa'),
-(10, 5, 1, 9, 16, 'gejala', '2 kali sehari', 'Sakit Pinggang', 1410530415, 'Diberi Obat');
 
 -- --------------------------------------------------------
 
@@ -232,70 +178,81 @@ INSERT INTO `rekam_medis` (`no_rm`, `kd_tindakan`, `kd_obat`, `kd_user`, `no_pas
 
 CREATE TABLE `tindakan` (
   `kd_tindakan` int(11) NOT NULL,
+  `id_periksa` int(10) NOT NULL,
   `nm_tindakan` varchar(300) NOT NULL,
-  `ket` text NOT NULL
+  `ket` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tindakan`
 --
 
-INSERT INTO `tindakan` (`kd_tindakan`, `nm_tindakan`, `ket`) VALUES
-(5, 'Rawat Inap', 'Di Rawat di Rumah Sakit'),
-(7, 'Rawat Inap', 'UPT Puskesmas 1'),
-(8, 'Rawat Jalan', 'Rawat Jalan dengan minum obat teratur');
+INSERT INTO `tindakan` (`kd_tindakan`, `id_periksa`, `nm_tindakan`, `ket`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 0, '99.21', 'Injeksi Anti Biotik', '2021-06-03 14:05:04', '2021-06-03 14:05:04', '2021-06-03 14:05:04'),
+(11, 0, '99.18', 'INFUS', '2021-06-03 14:05:04', '2021-06-03 14:05:04', '2021-06-03 14:05:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(300) NOT NULL,
+  `nama` varchar(20) NOT NULL,
+  `alamat` text NOT NULL,
+  `role` varchar(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `update_at` timestamp NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `password`, `nama`, `alamat`, `role`, `created_at`, `update_at`, `deleted_at`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'desi', 'boyolali', 'admin', '2021-06-03 14:27:41', '2021-06-03 14:27:41', NULL),
+(2, 'dokter', 'd22af4180eee4bd95072eb90f94930e5', 'Dr Stone', 'Mars', 'dokter', '2021-06-03 15:00:04', '2021-06-03 15:00:04', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `dokter`
+-- Indexes for table `diagnosa`
 --
-ALTER TABLE `dokter`
-  ADD PRIMARY KEY (`kd_dokter`);
+ALTER TABLE `diagnosa`
+  ADD PRIMARY KEY (`kd_diag`);
 
 --
 -- Indexes for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  ADD PRIMARY KEY (`kd_kunjungan`);
-
---
--- Indexes for table `laboratorium`
---
-ALTER TABLE `laboratorium`
-  ADD PRIMARY KEY (`kd_lab`);
-
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`kd_user`);
-
---
--- Indexes for table `obat`
---
-ALTER TABLE `obat`
-  ADD PRIMARY KEY (`kd_obat`);
+  ADD PRIMARY KEY (`no_kunjungan`);
 
 --
 -- Indexes for table `pasien`
 --
 ALTER TABLE `pasien`
-  ADD PRIMARY KEY (`no_pasien`);
-
---
--- Indexes for table `poliklinik`
---
-ALTER TABLE `poliklinik`
-  ADD PRIMARY KEY (`kd_poli`);
-
---
--- Indexes for table `rekam_medis`
---
-ALTER TABLE `rekam_medis`
   ADD PRIMARY KEY (`no_rm`);
+
+--
+-- Indexes for table `periksa`
+--
+ALTER TABLE `periksa`
+  ADD PRIMARY KEY (`id_periksa`);
+
+--
+-- Indexes for table `resep_obt`
+--
+ALTER TABLE `resep_obt`
+  ADD PRIMARY KEY (`id_resep`);
 
 --
 -- Indexes for table `tindakan`
@@ -304,54 +261,45 @@ ALTER TABLE `tindakan`
   ADD PRIMARY KEY (`kd_tindakan`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `dokter`
---
-ALTER TABLE `dokter`
-  MODIFY `kd_dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `kd_kunjungan` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `no_kunjungan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `laboratorium`
+-- AUTO_INCREMENT for table `periksa`
 --
-ALTER TABLE `laboratorium`
-  MODIFY `kd_lab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `periksa`
+  MODIFY `id_periksa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `login`
+-- AUTO_INCREMENT for table `resep_obt`
 --
-ALTER TABLE `login`
-  MODIFY `kd_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `obat`
---
-ALTER TABLE `obat`
-  MODIFY `kd_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `pasien`
---
-ALTER TABLE `pasien`
-  MODIFY `no_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
---
--- AUTO_INCREMENT for table `poliklinik`
---
-ALTER TABLE `poliklinik`
-  MODIFY `kd_poli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `rekam_medis`
---
-ALTER TABLE `rekam_medis`
-  MODIFY `no_rm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `resep_obt`
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;COMMIT;
+  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
