@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 04, 2021 at 08:16 AM
+-- Generation Time: Jun 04, 2021 at 10:20 AM
 -- Server version: 10.3.29-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -29,20 +29,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `diagnosa` (
-  `kd_diag` varchar(11) NOT NULL,
-  `id_periksa` int(10) NOT NULL,
-  `nm_diag` varchar(300) NOT NULL,
+  `id_diag` int(11) NOT NULL,
+  `kd_diag` varchar(30) NOT NULL,
+  `id_periksa` int(10) DEFAULT NULL,
+  `nm_diag` varchar(300) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT current_timestamp()
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `diagnosa`
 --
 
-INSERT INTO `diagnosa` (`kd_diag`, `id_periksa`, `nm_diag`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('I10', 0, 'Hypertension', '2021-06-03 14:11:27', '2021-06-03 14:11:27', '2021-06-03 14:11:27');
+INSERT INTO `diagnosa` (`id_diag`, `kd_diag`, `id_periksa`, `nm_diag`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'l10', 10, 'Hypertension', '2021-06-03 14:11:27', '2021-06-03 14:11:27', NULL),
+(2, 'l30', 1, 'Sakit Kepala Edited', '2021-06-04 02:59:07', '2021-06-04 02:59:07', NULL),
+(3, 'l20', 2, 'Sakit Perut', '2021-06-04 03:18:49', '2021-06-04 03:18:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -132,12 +135,12 @@ INSERT INTO `pasien` (`no_rm`, `nm_pasien`, `j_kel`, `agama`, `alamat`, `tgl_lhr
 CREATE TABLE `periksa` (
   `id_periksa` int(10) NOT NULL,
   `no_kunjungan` int(10) NOT NULL,
-  `tensi` varchar(10) DEFAULT NULL,
-  `nadi` varchar(10) DEFAULT NULL,
-  `suhu` varchar(10) DEFAULT NULL,
-  `napas` varchar(10) DEFAULT NULL,
-  `bb` varchar(10) DEFAULT NULL,
-  `keluhan` varchar(30) DEFAULT NULL,
+  `tensi` varchar(20) DEFAULT NULL,
+  `nadi` varchar(20) DEFAULT NULL,
+  `suhu` varchar(20) DEFAULT NULL,
+  `napas` varchar(20) DEFAULT NULL,
+  `bb` varchar(20) DEFAULT NULL,
+  `keluhan` text DEFAULT NULL,
   `kd_diagnosa` varchar(20) DEFAULT NULL,
   `kd_tindakan` varchar(10) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -150,7 +153,7 @@ CREATE TABLE `periksa` (
 --
 
 INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `napas`, `bb`, `keluhan`, `kd_diagnosa`, `kd_tindakan`, `created_at`, `update_at`, `daleted_at`) VALUES
-(1, 1, 'embuh', 'embuh', 'embuh', 'embuh', 'embuh', 'pusing', '', '', '2021-06-03 16:14:38', '2021-06-03 16:14:38', NULL),
+(1, 1, '120/80', '80 detak/menit', '80 °C', 'Normal', '80 kg', 'pusing, perut mual', '', '', '2021-06-03 16:14:38', '2021-06-03 16:14:38', NULL),
 (2, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
 
 -- --------------------------------------------------------
@@ -228,7 +231,7 @@ INSERT INTO `users` (`id_user`, `username`, `password`, `nama`, `alamat`, `role`
 -- Indexes for table `diagnosa`
 --
 ALTER TABLE `diagnosa`
-  ADD PRIMARY KEY (`kd_diag`);
+  ADD PRIMARY KEY (`id_diag`);
 
 --
 -- Indexes for table `kunjungan`
@@ -269,6 +272,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `diagnosa`
+--
+ALTER TABLE `diagnosa`
+  MODIFY `id_diag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`
