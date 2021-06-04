@@ -5,7 +5,7 @@
                 <li><a href="?menu=obat"><i class="icon-medkit"></i> Obat</a></li>
 				<li><a href="?menu=pasien"><i class="icon-user-md "></i> Pasien</a></li>
                 <li><a href="?menu=periksa"><i class="icon-stethoscope "></i> Periksa</a></li>
-				<li><a href="?menu=resep_obt"><i class="icon-medkit"></i> Resep Obat</a></li>
+				<li><a href="?menu=resep_obat"><i class="icon-medkit"></i> Resep Obat</a></li>
 				<li><a href="?menu=kunjungan"><i class="icon-hospital"></i> Kunjungan</a></li>
 				<li><a href="?menu=laporanpasien"><i class="icon-paper-clip"></i> Laporan Data Pasien</a></li>
                 <li><a href="?menu=laporanperiksa"><i class="icon-paper-clip"></i> Laporan Data Periksa</a></li>

@@ -23,7 +23,7 @@ $editDb = mysqli_fetch_assoc($edit);
 <div class="box">
 	<header>
 		<h5>Tambah Diagnosa</h5>
-	</header>INSERT
+	</header>
 		<div class="body">
 			<form action="" method="post" class="form-horizontal">
 			<div class="form-group">

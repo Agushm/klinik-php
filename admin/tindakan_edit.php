@@ -9,6 +9,7 @@ $editDb = mysqli_fetch_assoc($edit);
 			include_once("../library/koneksi.php");
 			if($editDb["id_periksa"]==null){
 				mysqli_query($server,"INSERT INTO tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."', id_periksa='".$_GET["nmr"]."'")or die("Query Error Insert".mysqli_error());
+				mysqli_query($server,"INSERT INTO resep_obt set  no_kunjungan = '".$editDb["no_kunjungan"]."'")or die ("error insert resep_obt: ".mysqli_error());
 			}else{
 				mysqli_query($server,"UPDATE tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
 			}

@@ -1,10 +1,15 @@
-<?php if($_GET["resep"] != null){ 
+<?php if($_GET["cetak"] != null){ 
 	include_once("../library/koneksi.php");
 	
-	$obtSql = "SELECT * FROM obat WHERE kd_obat ='".$_GET['resep']."'";
+	$obtSql = "SELECT * FROM resep_obt LEFT JOIN obat ON obat.kd_obat = resep_obt.kd_obat WHERE id_resep ='".$_GET['cetak']."'";
 	$result = mysqli_query($server,$obtSql) or die ("Query obat salah: ".mysqli_error());
+	$data_obat= mysqli_fetch_assoc($result);
+
+	$pasienSql = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm WHERE kunjungan.no_kunjungan = '".$data_obat['no_kunjungan']."'";
+	$pasienResult = mysqli_query($server,$pasienSql) or die ("Query obat salah: ".mysqli_error());
 	
-	$data= $result->fetch_row();
+	
+	$data_pasien= mysqli_fetch_assoc($pasienResult);
 
 	?>
 	<style>
@@ -16,9 +21,10 @@
     }
 }
 </style>
-	<body onLoad="window.print();">
+	<body onLoad="window.print();" >
 	<div class="panel panel-default" >
-	<button class="btn btn-primary no-print" onclick ='window.print();'>Cetak</button>
+	<!-- onLoad="window.print();" -->
+	<button class="btn btn-primary no-print" onclick="window.print();">Cetak</button>
 	
 	<div class="panel-heading">
 		Resep Obat
@@ -31,25 +37,37 @@
                 <td class="left">
                   <strong>Nomer Periksa</strong>
                 </td>
-                <td class="right"><?php echo($data[1]);?></td>
+                <td class="right"><?php echo($data_obat['no_kunjungan']);?></td>
               </tr>
               <tr>
                 <td class="left">
                   <strong>Nama Pasien</strong>
                 </td>
-                <td class="right"><?php echo($data[2]);?></td>
+                <td class="right"><?php echo($data_pasien["nm_pasien"]);?></td>
               </tr>
               <tr>
                 <td class="left">
                   <strong>Nama Obat</strong>
                 </td>
-                <td class="right"><?php echo($data[3]);?></td>
+                <td class="right"><?php echo($data_obat['nm_obat']);?></td>
               </tr>
               <tr>
                 <td class="left">
                   <strong>Aturan Minum</strong>
                 </td>
-                <td class="right"><?php echo($data[4]);?></td>
+                <td class="right"><?php echo($data_obat['aturan']);?></td>
+              </tr>
+			  <tr>
+                <td class="left">
+                  <strong>Takaran</strong>
+                </td>
+                <td class="right"><?php echo($data_obat['takaran']);?></td>
+              </tr>
+			  <tr>
+                <td class="left">
+                  <strong>Tanggal Periksa</strong>
+                </td>
+                <td class="right"><?php echo($data_obat['created_at']);?></td>
               </tr>
             </tbody>
           </table>
@@ -68,12 +86,11 @@ include_once("../library/koneksi.php");
 #untuk paging (pembagian halamanan)
 $row = 20;
 $hal = isset($_GET['hal']) ? $_GET['hal'] : 0;
-$pageSql = "SELECT * FROM obat";
+$pageSql = "SELECT * FROM resep_obt";
 $pageQry = mysqli_query($server,$pageSql) or die ("error paging: ".mysqli_error());
 $jml	 = mysqli_num_rows($pageQry);
 $max	 = ceil($jml/$row);
 ?>
-<a href="#myModal" class="btn btn-primary btn-rect" data-toggle="modal"><i class='icon icon-white icon-plus'></i> Tambah Obat</a><p>
 <?php
 	if($_POST["obt"]){
 			include_once("../library/koneksi.php");
@@ -101,41 +118,61 @@ obat(); //memanggil function obat
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th width="140">Kode Obat</th>
 						<th>No Periksa</th>
+						<th>Tanggal Periksa</th>
 						<th>Nama Pasien</th>
+						<th>Kode Obat</th>		
 						<th>Nama Obat</th>
 						<th>Aturan minum</th>
-						<th>Resep Obat</th>
+						<th>Takaran</th>
+						<th>Buat Resep</th>
+						<th>Cetak Resep</th>
 						<th width="90">Aksi</th>
 					</tr>
 				</thead>
 			<?php
-				$obtSql = "SELECT * FROM obat ORDER BY kd_obat DESC LIMIT $hal, $row";
+				$obtSql = "SELECT * FROM resep_obt ORDER BY no_kunjungan DESC LIMIT $hal, $row";
 				$obtQry = mysqli_query($server,$obtSql)  or die ("Query Obat salah : ".mysqli_error());
-				$nomor  = 0; 
+				$nomor  = 0;
 				while ($obat = mysqli_fetch_array($obtQry)) {
 			?>
 				<tbody>
 					<tr>
-						<td><?php echo $obat['kd_obat'];?></td>
-						<td><?php echo $obat['no_periksa'];?></td>
-						<td><?php echo $obat['nm_pasien'];?></td>
-						<td><?php echo $obat['nm_obat'];?></td>
-						<td><?php echo $obat['aturan'];?></td>
-						<td><a href="?menu=obat&resep=<?php echo $obat['kd_obat']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Cetak Resep Obat" onclick="return confirm('Anda akan mencetak resep obat kode <?php echo $obat['kd_obat'];?> ?')"><i class="icon-print icon-white"></td>
 						
+						<td><?php echo $obat['no_kunjungan'];?></td>
+						<td><?php echo $obat['created_at'];?></td>
+						<td>
+							 <?php 
+							$pasienSql = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm WHERE kunjungan.no_kunjungan = '".$obat['no_kunjungan']."'";
+							$pasienQry = mysqli_query($server,$pasienSql)  or die ("Query Obat salah : ".mysqli_error());
+							$pasien = mysqli_fetch_assoc($pasienQry);
+							
+							echo $pasien['nm_pasien'];?> 
+							
+							</td>
+						<td><?php echo $obat['kd_obat'];?></td>
+						
+						<td><?php 
+						$d_obtSql = "SELECT * FROM obat WHERE kd_obat = '".$obat['kd_obat']."'";
+						$d_obtQry = mysqli_query($server,$d_obtSql)  or die ("Query Obat salah : ".mysqli_error());
+						$d_obt = mysqli_fetch_assoc($d_obtQry);
+						
+						echo $d_obt['nm_obat'];?>
+						</td>
+						<td><?php echo $obat['aturan'];?></td>
+						<td><?php echo $obat['takaran'];?></td>
+						<td><a href="?menu=resep_obat_edit&nmr=<?php echo $obat['no_kunjungan']; ?>" class="btn btn-xs btn-primary tipsy-kiri-atas" title="Buat Resep Obat" ><i class="icon-plus icon-white"></td>
+						<td><a href="?menu=resep_obat&cetak=<?php echo $obat['id_resep']; ?>" class="btn btn-xs btn-green tipsy-kiri-atas" title="Cetak Resep Obat" onclick="return confirm('Anda akan mencetak resep obat kunjungan ke <?php echo $obat['no_kunjungan'];?> ?')"><i class="icon-print icon-white"></td>
 						<td>
 						  <div class='btn-group'>
-						  <a href="?menu=obat_del&aksi=hapus&nmr=<?php echo $obat['kd_obat']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Hapus Data Ini" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA PENTING INI ... ?')"><i class="icon-remove icon-white"></i></a> 
-						  <a href="?menu=obat_edit&aksi=edit&nmr=<?php echo $obat['kd_obat']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Edit Data ini'> <i class="icon-edit icon-white"></i> </a>
+						  <a href="?menu=resep_obat_del&aksi=hapus&nmr=<?php echo $obat['id_resep']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Hapus Data Ini" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA PENTING INI ... ?')"><i class="icon-remove icon-white"></i></a> 
 						  </div>
 						</td>
 					</tr>
 				</tbody>
 			<?php } ?>
 					<tr>
-						<td colspan="6" align="right">
+						<td colspan="10" align="right">
 						<?php
 						for($h = 1; $h <= $max; $h++){
 							$list[$h] = $row*$h-$row;

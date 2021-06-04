@@ -1,7 +1,7 @@
 <?php
 if($_GET["aksi"] && $_GET["nmr"]){
 include_once("../library/koneksi.php");
-$edit = mysqli_query("select * from kunjungan where kd_kunjungan='".$_GET["nmr"]."'");
+$edit = mysqli_query($dosen,"select * from kunjungan where kd_kunjungan='".$_GET["nmr"]."'");
 $editDb = mysqli_fetch_assoc($edit);
 	if($_POST["kjg"]){
 			include_once("../library/koneksi.php");
