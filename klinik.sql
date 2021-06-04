@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 04, 2021 at 04:04 PM
+-- Generation Time: Jun 04, 2021 at 08:38 PM
 -- Server version: 10.3.29-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `diagnosa` (
   `id_diag` int(11) NOT NULL,
-  `kd_diag` varchar(30) NOT NULL,
+  `kd_diag` varchar(30) DEFAULT NULL,
   `id_periksa` int(10) DEFAULT NULL,
   `nm_diag` varchar(300) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -43,9 +43,10 @@ CREATE TABLE `diagnosa` (
 --
 
 INSERT INTO `diagnosa` (`id_diag`, `kd_diag`, `id_periksa`, `nm_diag`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'l10', 10, 'Hypertension', '2021-06-03 14:11:27', '2021-06-03 14:11:27', NULL),
-(2, 'l30', 1, 'Sakit Kepala Edited', '2021-06-04 02:59:07', '2021-06-04 02:59:07', NULL),
-(3, 'l20', 2, 'Sakit Perut', '2021-06-04 03:18:49', '2021-06-04 03:18:49', NULL);
+(1, 'l30', 2, 'Sakit Kepala Edited', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL),
+(2, 'l30', 1, 'Sakit Perut', '2021-06-04 09:41:50', '2021-06-04 09:41:50', NULL),
+(3, 'l30', 2, 'Sakit Kepala Edited', '2021-06-04 11:26:13', '2021-06-04 11:26:13', NULL),
+(4, NULL, 3, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -66,13 +67,9 @@ CREATE TABLE `kunjungan` (
 --
 
 INSERT INTO `kunjungan` (`no_kunjungan`, `no_rm`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'RM000001', '2021-06-03 15:59:27', '2021-06-03 15:59:27', NULL),
-(3, 'RM000002', '2021-06-03 16:09:18', '2021-06-03 16:09:18', NULL),
-(6, 'RM000001', '2021-06-03 16:28:32', '2021-06-03 16:28:32', NULL),
-(7, 'RM000001', '2021-06-03 16:28:43', '2021-06-03 16:28:43', NULL),
-(8, 'RM000001', '2021-06-03 16:33:07', '2021-06-03 16:33:07', NULL),
-(9, 'RM000001', '2021-06-03 16:34:25', '2021-06-03 16:34:25', NULL),
-(10, 'RM000001', '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
+(1, 'RM000001', '2021-06-04 09:41:50', '2021-06-04 09:41:50', NULL),
+(2, 'RM0003', '2021-06-04 11:26:12', '2021-06-04 11:26:12', NULL),
+(3, 'RM000001', '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -153,8 +150,8 @@ CREATE TABLE `periksa` (
 --
 
 INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `napas`, `bb`, `keluhan`, `kd_diagnosa`, `kd_tindakan`, `created_at`, `update_at`, `daleted_at`) VALUES
-(1, 1, '120/80', '80 detak/menit', '80 °C', 'Normal', '80 kg', 'pusing, perut mual', '', '', '2021-06-03 16:14:38', '2021-06-03 16:14:38', NULL),
-(2, 10, '120/80', '80 detak/menit', '35 °C', 'ngap 2 kali', '60 kg', 'Gagal napas', NULL, NULL, '2021-06-03 16:35:40', '2021-06-03 16:35:40', NULL);
+(2, 2, '120/80', '80 detak/menit', '80 °C', 'ngap 2 kali', '60 kg', 'Mual', NULL, NULL, '2021-06-04 11:26:13', '2021-06-04 11:26:13', NULL),
+(3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -164,14 +161,21 @@ INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `n
 
 CREATE TABLE `resep_obt` (
   `id_resep` int(11) NOT NULL,
-  `no_kunjungan` int(10) NOT NULL,
-  `kd_obat` varchar(10) NOT NULL,
-  `aturan` varchar(20) NOT NULL,
-  `takaran` varchar(30) NOT NULL,
+  `no_kunjungan` int(10) DEFAULT NULL,
+  `kd_obat` varchar(10) DEFAULT NULL,
+  `aturan` text DEFAULT NULL,
+  `takaran` varchar(30) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT current_timestamp()
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `resep_obt`
+--
+
+INSERT INTO `resep_obt` (`id_resep`, `no_kunjungan`, `kd_obat`, `aturan`, `takaran`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 'OBT001', '2 x sehari', '10 ml', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -188,6 +192,15 @@ CREATE TABLE `tindakan` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tindakan`
+--
+
+INSERT INTO `tindakan` (`kd_tindakan`, `id_periksa`, `nm_tindakan`, `ket`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, '99.33', 'Infus', '2021-06-04 09:42:44', '2021-06-04 09:42:44', NULL),
+(2, 2, '99.38', 'nonon', '2021-06-04 11:46:56', '2021-06-04 11:46:56', NULL),
+(3, 3, '99.38', 'UGD', '2021-06-04 12:29:58', '2021-06-04 12:29:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -269,31 +282,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `diagnosa`
 --
 ALTER TABLE `diagnosa`
-  MODIFY `id_diag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_diag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `no_kunjungan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `no_kunjungan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id_periksa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_periksa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `resep_obt`
 --
 ALTER TABLE `resep_obt`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
