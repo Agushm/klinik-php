@@ -107,7 +107,7 @@ $max	 = ceil($jml/$row);
 			</div><center>";
 	}
 
-obat(); //memanggil function obat
+
 ?>
 <div class="panel panel-default">
 	<div class="panel-heading">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 04, 2021 at 08:38 PM
+-- Generation Time: Jun 05, 2021 at 11:06 AM
 -- Server version: 10.3.29-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -43,10 +43,11 @@ CREATE TABLE `diagnosa` (
 --
 
 INSERT INTO `diagnosa` (`id_diag`, `kd_diag`, `id_periksa`, `nm_diag`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'l30', 2, 'Sakit Kepala Edited', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL),
+(1, 'l30', 2, 'Sakit Kepala Edited 2', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL),
 (2, 'l30', 1, 'Sakit Perut', '2021-06-04 09:41:50', '2021-06-04 09:41:50', NULL),
-(3, 'l30', 2, 'Sakit Kepala Edited', '2021-06-04 11:26:13', '2021-06-04 11:26:13', NULL),
-(4, NULL, 3, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
+(3, 'l30', 2, 'Sakit Kepala Edited 2', '2021-06-04 11:26:13', '2021-06-04 11:26:13', NULL),
+(4, NULL, 3, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL),
+(5, NULL, 4, NULL, '2021-06-05 00:51:52', '2021-06-05 00:51:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,8 @@ CREATE TABLE `kunjungan` (
 INSERT INTO `kunjungan` (`no_kunjungan`, `no_rm`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'RM000001', '2021-06-04 09:41:50', '2021-06-04 09:41:50', NULL),
 (2, 'RM0003', '2021-06-04 11:26:12', '2021-06-04 11:26:12', NULL),
-(3, 'RM000001', '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
+(3, 'RM000001', '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL),
+(4, 'RM000001', '2021-06-05 00:51:52', '2021-06-05 00:51:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -151,7 +153,8 @@ CREATE TABLE `periksa` (
 
 INSERT INTO `periksa` (`id_periksa`, `no_kunjungan`, `tensi`, `nadi`, `suhu`, `napas`, `bb`, `keluhan`, `kd_diagnosa`, `kd_tindakan`, `created_at`, `update_at`, `daleted_at`) VALUES
 (2, 2, '120/80', '80 detak/menit', '80 °C', 'ngap 2 kali', '60 kg', 'Mual', NULL, NULL, '2021-06-04 11:26:13', '2021-06-04 11:26:13', NULL),
-(3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL);
+(3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-04 12:29:04', '2021-06-04 12:29:04', NULL),
+(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-05 00:51:52', '2021-06-05 00:51:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -175,7 +178,8 @@ CREATE TABLE `resep_obt` (
 --
 
 INSERT INTO `resep_obt` (`id_resep`, `no_kunjungan`, `kd_obat`, `aturan`, `takaran`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 'OBT001', '2 x sehari', '10 ml', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL);
+(1, 2, 'OBT001', '2 x sehari', '10 ml', '2021-06-04 09:41:00', '2021-06-04 09:41:00', NULL),
+(5, 4, NULL, NULL, NULL, '2021-06-05 00:52:08', '2021-06-05 00:52:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -199,8 +203,9 @@ CREATE TABLE `tindakan` (
 
 INSERT INTO `tindakan` (`kd_tindakan`, `id_periksa`, `nm_tindakan`, `ket`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, '99.33', 'Infus', '2021-06-04 09:42:44', '2021-06-04 09:42:44', NULL),
-(2, 2, '99.38', 'nonon', '2021-06-04 11:46:56', '2021-06-04 11:46:56', NULL),
-(3, 3, '99.38', 'UGD', '2021-06-04 12:29:58', '2021-06-04 12:29:58', NULL);
+(2, 2, '99.38', 'nonon Edited 2', '2021-06-04 11:46:56', '2021-06-04 11:46:56', NULL),
+(3, 3, '99.38', 'UGD', '2021-06-04 12:29:58', '2021-06-04 12:29:58', NULL),
+(4, 4, '99.33', 'Infus', '2021-06-05 00:52:08', '2021-06-05 00:52:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -282,31 +287,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `diagnosa`
 --
 ALTER TABLE `diagnosa`
-  MODIFY `id_diag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_diag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `no_kunjungan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `no_kunjungan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id_periksa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_periksa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `resep_obt`
 --
 ALTER TABLE `resep_obt`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `kd_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`

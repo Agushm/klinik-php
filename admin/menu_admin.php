@@ -1,7 +1,8 @@
        <div id="left">
             <ul id="menu" class="collapse">
                 <li class="panel active"><a href="index.php"><i class="icon-home"></i> Dashboard</a></li>
-                <li><a href="?menu=user"><i class="icon-user "></i> Daftar User</a></li>
+                <li><a href="?menu=statistic"><i class="fa fa-pie-chart "></i> Statistik</a></li>
+				<li><a href="?menu=user"><i class="icon-user "></i> Daftar User</a></li>
                 <li><a href="?menu=obat"><i class="icon-medkit"></i> Obat</a></li>
 				<li><a href="?menu=pasien"><i class="icon-user-md "></i> Pasien</a></li>
                 <li><a href="?menu=periksa"><i class="icon-stethoscope "></i> Periksa</a></li>
@@ -48,7 +49,9 @@
 												<div class='tab-content'>
 													<div class='tab-pane fade in active' id='home'>
 													<center>
-														<p><img src='../img/klinik.png' class='img-responsive' alt='Header SIRS'/></p></center>
+														<p><img src='../img/klinik.png' class='img-responsive' alt='Header SIRS'/></p>
+														
+													</center>
 													</div>
 													<div class='tab-pane fade' id='profile'>
 														

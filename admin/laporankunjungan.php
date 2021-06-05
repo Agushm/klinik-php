@@ -22,14 +22,17 @@
 	<table width="100%" cellspacing="0" cellpadding="2" border="1px" class="style1">
 
 		<tr>
+		<th width="1%" align="center" bgcolor="#CCCCCC">No</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Kunjungan</th>
-			<th width="6%" align="center" bgcolor="#CCCCCC">Nomor Rekam Medis</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Nomor RMIK</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Nama Pasien</th>
-			<th width="6%" align="center" bgcolor="#CCCCCC">Jam Kunjung</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Lahir</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Jenis Kelamin</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Alamat</th>
 		</tr>
 
 		<?php
-		$kunjunganSql = "SELECT * FROM kunjungan ORDER BY kd_kunjungan DESC LIMIT $hal, $row";
+		$kunjunganSql = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm ORDER BY no_kunjungan ASC LIMIT $hal, $row";
 		$kunjunganQry = mysqli_query( $server,$kunjunganSql)  or die("Query kunjungan salah : " . mysqli_error());
 		$nomor  = 0;
 		while ($kunjungan = mysqli_fetch_array($kunjunganQry)) {
@@ -37,10 +40,13 @@
 		?>
 			<tbody>
 				<tr>
-					<td><?php echo $kunjungan['tgl_kunjungan']; ?></td>
+					<td><?php echo $kunjungan['no_kunjungan']; ?></td>
+					<td><?php echo $kunjungan['created_at']; ?></td>
 					<td><?php echo $kunjungan['no_rm']; ?></td>
 					<td><?php echo $kunjungan['nm_pasien']; ?></td>
-					<td><?php echo $kunjungan['jam_kunjungan']; ?></td>
+					<td><?php echo $kunjungan['tgl_lhr']; ?></td>
+					<td><?php echo $kunjungan['j_kel']; ?></td>
+					<td><?php echo $kunjungan['alamat']; ?></td>
 
 				</tr>
 			</tbody>

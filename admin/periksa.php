@@ -32,7 +32,7 @@ $max	 = ceil($jml/$row);
 						<th>Periksa</th>
 						<th>Diagnosa</th>
 						<th>Tindakan</th>
-						<th width="90">Hapus</th>
+						<th width="90">Aksi</th>
 					</tr>
 				</thead>
 			<?php
@@ -83,6 +83,7 @@ $max	 = ceil($jml/$row);
 						<td><a href="?menu=tindakan_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Tambah Tindakan'> <i class="icon-stethoscope icon-white"></i> </a></td>
 						<td>
 						  <div class='btn-group'>
+						  <a href="?menu=periksa_all_edit&aksi=edit&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-info tipsy-kiri-atas" title='Edit Data ini'> <i class="icon-edit icon-white"></i> </a>
 						  <a href="?menu=periksa_del&aksi=hapus&nmr=<?php echo $periksa['id_periksa']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Hapus Data Ini" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA PENTING INI ... ?')"><i class="icon-remove icon-white"></i></a> 
 						  </div>
 						</td>
