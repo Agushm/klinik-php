@@ -8,9 +8,18 @@ $editDb = mysqli_fetch_assoc($edit);
 			include_once("../library/koneksi.php");
 			
 			mysqli_query($server,"update periksa set tensi='".$_POST["tensi"]."', nadi='".$_POST["nadi"]."', suhu='".$_POST["suhu"]."', bb='".$_POST["bb"]."', keluhan='".$_POST["keluhan"]."', napas='".$_POST["napas"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
-            mysqli_query($server,"UPDATE diagnosa set kd_diag='".$_POST["kd_diag"]."',nm_diag='".$_POST["nm_diag"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update Diagnosa".mysqli_error());
-            mysqli_query($server,"UPDATE tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update Tindakan".mysqli_error());
-            echo "<meta http-equiv='refresh' content='0; url=?menu=periksa'>";
+			if($editDb["kd_diag"]==null){
+				mysqli_query($server,"INSERT INTO diagnosa set kd_diag='".$_POST["kd_diag"]."', id_periksa='".$_GET["nmr"]."', nm_diag='".$_POST["nm_diag"]."'")or die("Query Error Insert".mysqli_error());
+			}else{
+				mysqli_query($server,"UPDATE diagnosa set kd_diag='".$_POST["kd_diag"]."',nm_diag='".$_POST["nm_diag"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
+			}
+			if($editDb["nm_tindakan"] == null){
+				mysqli_query($server,"INSERT INTO tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."', id_periksa='".$_GET["nmr"]."'")or die("Query Error Insert".mysqli_error());
+				mysqli_query($server,"INSERT INTO resep_obt set  no_kunjungan = '".$editDb["no_kunjungan"]."'")or die ("error insert resep_obt: ".mysqli_error());
+			}else{
+				mysqli_query($server,"UPDATE tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
+			}
+			echo "<meta http-equiv='refresh' content='0; url=?menu=periksa'>";
 			echo "<center><div class='alert alert-success alert-dismissable'>
                   <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
 					<b>Berhasil mengedit data!!</b>
@@ -27,7 +36,7 @@ $editDb = mysqli_fetch_assoc($edit);
 			<div class="form-group">
 							<label class="control-label col-lg-4">No Periksa</label>
 							<div class="col-lg-4">
-								<input type="var" name="id_periksa" class="form-control" value="<?php echo($editDb['id_periksa'])?>" disabled />
+								<input type="var" name="id_periksa" class="form-control" value="<?php echo($_GET['nmr'])?>" disabled />
 							</div>
 							</div>
 						<div class="form-group">

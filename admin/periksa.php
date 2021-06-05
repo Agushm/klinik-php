@@ -27,12 +27,12 @@ $max	 = ceil($jml/$row);
 						<th>Pernapasan</th>
 						<th>BB</th>
 						<th>Keluhan</th>
-						<th>Hasil Diagnosa</th>
+						<th>Diagnosa</th>
 						<th>Tindakan</th>
 						<th>Periksa</th>
 						<th>Diagnosa</th>
 						<th>Tindakan</th>
-						<th width="90">Aksi</th>
+						<th width="100">Aksi</th>
 					</tr>
 				</thead>
 			<?php
