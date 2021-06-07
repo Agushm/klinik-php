@@ -15,7 +15,7 @@ $editDb = mysqli_fetch_assoc($edit);
 			}
 			if($editDb["nm_tindakan"] == null){
 				mysqli_query($server,"INSERT INTO tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."', id_periksa='".$_GET["nmr"]."'")or die("Query Error Insert".mysqli_error());
-				mysqli_query($server,"INSERT INTO resep_obt set  no_kunjungan = '".$editDb["no_kunjungan"]."'")or die ("error insert resep_obt: ".mysqli_error());
+				mysqli_query($server,"INSERT INTO resep_obt set  no_pendaftaran = '".$editDb["no_pendaftaran"]."'")or die ("error insert resep_obt: ".mysqli_error());
 			}else{
 				mysqli_query($server,"UPDATE tindakan set nm_tindakan='".$_POST["nm_tindakan"]."', ket='".$_POST["ket"]."' WHERE id_periksa='".$_GET["nmr"]."'")or die("Query Error Update".mysqli_error());
 			}
@@ -43,7 +43,7 @@ $editDb = mysqli_fetch_assoc($edit);
 							<label class="control-label col-lg-4">Nama Pasien</label>
 							<?php
 								include_once("../library/koneksi.php");
-								$pas = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm WHERE no_kunjungan = '".$editDb["no_kunjungan"]."'";
+								$pas = "SELECT * FROM pendaftaran LEFT JOIN pasien ON pasien.no_rm=pendaftaran.no_rm WHERE no_pendaftaran = '".$editDb["no_pendaftaran"]."'";
 								$pasDb = mysqli_query($server,$pas) or die("Query Error get pasien".mysqli_error());
 
 								$pasR = mysqli_fetch_assoc($pasDb);

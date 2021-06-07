@@ -36,14 +36,14 @@ $max	 = ceil($jml/$row);
 					</tr>
 				</thead>
 			<?php
-				$periksaSql = "SELECT * FROM periksa LEFT JOIN kunjungan ON kunjungan.no_kunjungan=periksa.no_kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm ORDER BY id_periksa DESC LIMIT $hal, $row";
+				$periksaSql = "SELECT * FROM periksa LEFT JOIN pendaftaran ON pendaftaran.no_pendaftaran=periksa.no_pendaftaran LEFT JOIN pasien ON pasien.no_rm=pendaftaran.no_rm ORDER BY id_periksa DESC LIMIT $hal, $row";
 				$periksaQry = mysqli_query($server,$periksaSql)  or die ("Query periksa salah : ".mysqli_error());
 				$nomor  = 0; 
 				while ($periksa = mysqli_fetch_array($periksaQry)) {
 			?>
 				<tbody>
 					<tr>
-						<td><?php echo $periksa['no_kunjungan'];?></td>
+						<td><?php echo $periksa['no_pendaftaran'];?></td>
 						<td><?php echo $periksa['nm_pasien'];?></td>
 						<td><?php echo $periksa['created_at'];?></td>
 						<td><?php echo $periksa['tensi'];?></td>

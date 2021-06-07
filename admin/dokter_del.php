@@ -2,10 +2,10 @@
 include_once("../library/koneksi.php");
 if($_GET){
 	if($_GET["aksi"] && $_GET["nmr"]){
-		$del = "DELETE FROM kunjungan WHERE no_kunjungan='".$_GET["nmr"]."'";
+		$del = "DELETE FROM dokter WHERE id_dokter='".$_GET["nmr"]."'";
 		$delDb = mysqli_query($server,$del) or die("Error hapus data ".mysqli_error());
 		if($delDb){
-			echo "<meta http-equiv='refresh' content='0; url=?menu=kunjungan'>";
+			echo "<meta http-equiv='refresh' content='0; url=?menu=dokter'>";
 		}
 	}else{
 		echo "<center><div class='alert alert-warning alert-dismissable'>

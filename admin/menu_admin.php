@@ -3,16 +3,16 @@
                 <li class="panel active"><a href="index.php"><i class="icon-home"></i> Dashboard</a></li>
                 <li><a href="?menu=statistic"><i class="fa fa-pie-chart "></i> Statistik</a></li>
 				<li><a href="?menu=pasien"><i class="icon-user-md "></i> Pasien</a></li>
-				<li><a href="?menu=kunjungan"><i class="icon-hospital"></i> Kunjungan</a></li>
+				<li><a href="?menu=pendaftaran"><i class="icon-hospital"></i> Pendaftaran</a></li>
                 <li><a href="?menu=periksa"><i class="icon-stethoscope "></i> Periksa</a></li>
-				<li><a href="?menu=resep_obat"><i class="icon-medkit"></i> Resep Obat</a></li>
+				<li><a href="?menu=dokter"><i class="icon-medkit"></i> Dokter</a></li>
+                <li><a href="?menu=poli"><i class="icon-medkit"></i> Poli</a></li>
 				<li><a href="?menu=user"><i class="icon-user "></i> Daftar User</a></li>
-                <li><a href="?menu=obat"><i class="icon-medkit"></i> Obat</a></li>
 				
 				
 				<li><a href="?menu=laporanpasien"><i class="icon-paper-clip"></i> Laporan Data Pasien</a></li>
                 <li><a href="?menu=laporanperiksa"><i class="icon-paper-clip"></i> Laporan Data Periksa</a></li>
-                <li><a href="?menu=laporankunjungan"><i class="icon-paper-clip"></i> Laporan Data Kunjungan</a></li>
+                <li><a href="?menu=laporanpendaftaran"><i class="icon-paper-clip"></i> Laporan Data Pendaftaran</a></li>
                 <li><a href="?menu=laporanresep"><i class="icon-paper-clip"></i> Laporan Data resep</a></li>
             </ul>
         </div>

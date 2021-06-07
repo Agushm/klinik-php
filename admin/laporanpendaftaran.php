@@ -7,14 +7,14 @@
 
 	$row = 20;
 	$hal = isset($_GET['hal']) ? $_GET['hal'] : 0;
-	$pageSql = "SELECT * FROM kunjungan";
+	$pageSql = "SELECT * FROM pendaftaran";
 	$pageQry = mysqli_query($server,$pageSql) or die("error paging: " . mysqli_error());
 	$jml     = mysqli_num_rows($pageQry);
 	$max     = ceil($jml / $row);
 	?>
 
 
-	<p align="center" size="25px">LAPORAN DATA KUNJUNGAN</p>
+	<p align="center" size="25px">LAPORAN DATA pendaftaran</p>
 
 	<hr>
 	</hr>
@@ -23,7 +23,7 @@
 
 		<tr>
 		<th width="1%" align="center" bgcolor="#CCCCCC">No</th>
-			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Kunjungan</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal pendaftaran</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Nomor RMIK</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Nama Pasien</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Lahir</th>
@@ -32,21 +32,21 @@
 		</tr>
 
 		<?php
-		$kunjunganSql = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm ORDER BY no_kunjungan ASC LIMIT $hal, $row";
-		$kunjunganQry = mysqli_query( $server,$kunjunganSql)  or die("Query kunjungan salah : " . mysqli_error());
+		$pendaftaranSql = "SELECT * FROM pendaftaran LEFT JOIN pasien ON pasien.no_rm=pendaftaran.no_rm ORDER BY no_pendaftaran ASC LIMIT $hal, $row";
+		$pendaftaranQry = mysqli_query( $server,$pendaftaranSql)  or die("Query pendaftaran salah : " . mysqli_error());
 		$nomor  = 0;
-		while ($kunjungan = mysqli_fetch_array($kunjunganQry)) {
+		while ($pendaftaran = mysqli_fetch_array($pendaftaranQry)) {
 			$nomor++;
 		?>
 			<tbody>
 				<tr>
-					<td><?php echo $kunjungan['no_kunjungan']; ?></td>
-					<td><?php echo $kunjungan['created_at']; ?></td>
-					<td><?php echo $kunjungan['no_rm']; ?></td>
-					<td><?php echo $kunjungan['nm_pasien']; ?></td>
-					<td><?php echo $kunjungan['tgl_lhr']; ?></td>
-					<td><?php echo $kunjungan['j_kel']; ?></td>
-					<td><?php echo $kunjungan['alamat']; ?></td>
+					<td><?php echo $pendaftaran['no_pendaftaran']; ?></td>
+					<td><?php echo $pendaftaran['created_at']; ?></td>
+					<td><?php echo $pendaftaran['no_rm']; ?></td>
+					<td><?php echo $pendaftaran['nm_pasien']; ?></td>
+					<td><?php echo $pendaftaran['tgl_lhr']; ?></td>
+					<td><?php echo $pendaftaran['j_kel']; ?></td>
+					<td><?php echo $pendaftaran['alamat']; ?></td>
 
 				</tr>
 			</tbody>
