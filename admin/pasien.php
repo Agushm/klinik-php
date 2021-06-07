@@ -19,12 +19,16 @@ $max	 = ceil($jml/$row);
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>Nomor Rekam Medis</th>
+						<th>Nomor RMIK</th>
 						<th>Nama Pasien</th>
+						<th>Tanggal Lahir</th>
 						<th>Jenis Kelamin</th>
+						<th>Agama</th>
+						<th>No KTP</th>
 						<th>Alamat</th>
 						<th>Nomor Telepone</th>
-						
+						<th>Nama Keluarga</th>
+						<th>Hubungan</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -39,9 +43,14 @@ $max	 = ceil($jml/$row);
 					<tr>
 						<td><?php echo $pasien['no_rm'];?></td>
 						<td><?php echo $pasien['nm_pasien'];?></td>
+						<td><?php echo $pasien['tgl_lhr'];?></td>
 						<td><?php echo $pasien['j_kel'];?></td>
+						<td><?php echo $pasien['agama'];?></td>
+						<td><?php echo $pasien['ktp'];?></td>
 						<td><?php echo $pasien['alamat'];?></td>
 						<td><?php echo $pasien['no_tlp'];?></td>
+						<td><?php echo $pasien['nm_kel'];?></td>
+						<td><?php echo $pasien['hub_kel'];?></td>
 						<td>
 						  <div class='btn-group'>
 						  <a href="?menu=hapus_pasien&aksi=hapus&nmr=<?php echo $pasien['no_rm']; ?>" class="btn btn-xs btn-danger tipsy-kiri-atas" title="Hapus Data Ini" onclick="return confirm('ANDA YAKIN AKAN MENGHAPUS DATA PENTING INI ... ?')"><i class="icon-remove icon-white"></i></a> 
@@ -52,7 +61,7 @@ $max	 = ceil($jml/$row);
 				</tbody>
 			<?php } ?>
 					<tr>
-						<td colspan="6" align="right">
+						<td colspan="11" align="right">
 						<?php
 						for($h = 1; $h <= $max; $h++){
 							$list[$h] = $row*$h-$row;

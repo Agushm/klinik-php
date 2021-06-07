@@ -2,7 +2,7 @@
 session_start();
 	if($_POST["pasien"]){
 			include_once("../library/koneksi.php");
-			mysqli_query($server,"insert into pasien set no_rm='".$_POST["no_rm"]."', nm_pasien='".$_POST["nm_pasien"]."', j_kel='".$_POST["jk"]."', agama='".$_POST["agama"]."', alamat='".$_POST["alamat"]."', tgl_lhr='".$_POST["tgl"]."', ktp='".$_POST["ktp"]."', no_tlp='".$_POST["nomor"]."', nm_kk='".$_POST["kk"]."', hub_kel='".$_POST["hub_kel"]."'");
+			mysqli_query($server,"INSERT INTO pasien set no_rm='".$_POST["no_rm"]."', nm_pasien='".$_POST["nm_pasien"]."', j_kel='".$_POST["j_kel"]."', agama='".$_POST["agama"]."', alamat='".$_POST["alamat"]."', tgl_lhr='".$_POST["tgl_lhr"]."', ktp='".$_POST["ktp"]."', no_tlp='".$_POST["no_tlp"]."', nm_kel='".$_POST["nm_kel"]."', hub_kel='".$_POST["hub_kel"]."'")or die ("Query add pasien: ".mysqli_error());
 			echo "<meta http-equiv='refresh' content='0; url=?menu=pasien'>";
 			echo "<center><div class='alert alert-success alert-dismissable'>
                   <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
@@ -36,7 +36,7 @@ session_start();
 						<div class="form-group">
 							<label class="control-label col-lg-4">Jenis Kelamin</label>
 							<div class="col-lg-2">
-								<select name="jk" class="form-control">
+								<select name="j_kel" class="form-control">
 									<option value="Pria">Pria</option>
 									<option value="Wanita">Wanita</option>
 								</select>
@@ -62,7 +62,7 @@ session_start();
 						<div class="form-group">
 							<label class="control-label col-lg-4">Tanggal Lahir</label>
 							<div class="col-lg-2">
-								<input type="text" class="form-control" placeholder="1998-05-09" name="tgl" /> Tahun-Bulan-Tanggal
+								<input type="date" class="form-control" name="tgl_lhr" /> Tahun-Bulan-Tanggal
 							</div>
 						</div>
 						<div class="form-group">
@@ -74,13 +74,13 @@ session_start();
 						<div class="form-group">
 							<label class="control-label col-lg-4">Nomor Telepone</label>
 							<div class="col-lg-4">
-								<input type="text" required name="nomor" class="form-control" />
+								<input type="text" required name="no_tlp" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">Nama Kepala Keluarga</label>
 							<div class="col-lg-4">
-								<input type="text" required name="kk" class="form-control" />
+								<input type="text" required name="nm_kel" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">

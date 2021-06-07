@@ -3,7 +3,7 @@ include_once("../library/koneksi.php");
 if($_GET){
 	if($_GET["aksi"] && $_GET["nmr"]){
 		$del = "DELETE FROM pasien WHERE no_rm='".$_GET["nmr"]."'";
-		$delDb = mysqli_query($del,$server) or die("Error hapus data ".mysqli_error());
+		$delDb = mysqli_query($server,$del) or die("Error hapus data ".mysqli_error());
 		if($delDb){
 			echo "<meta http-equiv='refresh' content='0; url=?menu=pasien'>";
 		}

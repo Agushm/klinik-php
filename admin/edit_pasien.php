@@ -1,11 +1,11 @@
 <?php
 if($_GET["aksi"] && $_GET["nmr"]){
 include_once("../library/koneksi.php");
-$edit = mysqli_query("select * from pasien where no_rm='".$_GET["nmr"]."'");
+$edit = mysqli_query($server,"select * from pasien where no_rm='".$_GET["nmr"]."'");
 $editDb = mysqli_fetch_assoc($edit);
 	if($_POST["pasien"]){
 			include_once("../library/koneksi.php");
-			mysqli_query("update pasien set no_rm='".$_POST["no_rm"]."', nm_pasien='".$_POST["nama"]."', j_kel='".$_POST["jk"]."', agama='".$_POST["agama"]."', alamat='".$_POST["alamat"]."', tgl_lhr='".$_POST["tgl"]."', ktp='".$_POST["ktp"]."', no_tlp='".$_POST["nomor"]."', nm_kk='".$_POST["kk"]."', hub_kel='".$_POST["hub_kel"]."' where no_rm='".$_GET["nmr"]."'");
+			mysqli_query($server,"update pasien set nm_pasien='".$_POST["nm_pasien"]."', j_kel='".$_POST["j_kel"]."', agama='".$_POST["agama"]."', alamat='".$_POST["alamat"]."', tgl_lhr='".$_POST["tgl_lhr"]."', ktp='".$_POST["ktp"]."', no_tlp='".$_POST["no_tlp"]."', nm_kel='".$_POST["nm_kel"]."', hub_kel='".$_POST["hub_kel"]."' WHERE no_rm='".$_GET["nmr"]."'");
 			echo "<meta http-equiv='refresh' content='0; url=?menu=pasien'>";
 			echo "<center><div class='alert alert-success alert-dismissable'>
                   <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
@@ -21,19 +21,19 @@ $editDb = mysqli_fetch_assoc($edit);
 			<div class="form-group">
 							<label class="control-label col-lg-4">No Rekam Medis</label>
 							<div class="col-lg-4">
-								<input type="var" name="no_rm" value="<?php echo $editDb["no_rm"];?>" required class="form-control" />
+								<input type="var" name="no_rm" value="<?php echo $editDb["no_rm"];?>" required class="form-control" disabled/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">Nama Pasien</label>
 							<div class="col-lg-4">
-								<input type="text" name="nama" value="<?php echo $editDb["nm_pasien"];?>" required class="form-control" />
+								<input type="text" name="nm_pasien" value="<?php echo $editDb["nm_pasien"];?>" required class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">Jenis Kelamin</label>
 							<div class="col-lg-2">
-								<select name="jk" class="form-control">
+								<select name="j_kel" class="form-control">
 									<option value="Pria">Pria</option>
 									<option value="Wanita">Wanita</option>
 								</select>
@@ -59,25 +59,25 @@ $editDb = mysqli_fetch_assoc($edit);
 						<div class="form-group">
 							<label class="control-label col-lg-4" for="dp1">Tanggal Lahir</label>
 							<div class="col-lg-4">
-								<input type="text" required name="tgl" value="<?php echo $editDb["tgl_lhr"];?>" class="form-control" />
+								<input type="text" required name="tgl_lhr" value="<?php echo $editDb["tgl_lhr"];?>" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">No KTP/KK/Paspor</label>
 							<div class="col-lg-4">
-								<input type="text" required name="usia" value="<?php echo $editDb["ktp"];?>" class="form-control" />
+								<input type="text" required name="ktp" value="<?php echo $editDb["ktp"];?>" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">Nomor Telepone</label>
 							<div class="col-lg-4">
-								<input type="text" required name="nomor" value="<?php echo $editDb["no_tlp"];?>" class="form-control" />
+								<input type="text" required name="no_tlp" value="<?php echo $editDb["no_tlp"];?>" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-lg-4">Nama Kepala Keluarga</label>
 							<div class="col-lg-4">
-								<input type="text" required name="kk" value="<?php echo $editDb["nm_kk"];?>" class="form-control" />
+								<input type="text" required name="nm_kel" value="<?php echo $editDb["nm_kel"];?>" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -85,6 +85,14 @@ $editDb = mysqli_fetch_assoc($edit);
 							<div class="col-lg-2">
 								<select name="hub_kel" class="form-control">
 									<option value="Anak Kandung">Anak Kandung</option>
+									<option value="Ibu">Ibu</option>
+									<option value="Bapak">Bapak</option>
+									<option value="Kakak">Kakak</option>
+									<option value="Adek">Adek</option>
+									<option value="Nenek">Nenek</option>
+									<option value="Kakek">Kakek</option>
+									<option value="Suami">Suami</option>
+									<option value="Istri">Istri</option>
 									<option value="Lainnya">Lainnya</option>
 								</select>
 							</div>
