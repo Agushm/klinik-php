@@ -33,7 +33,7 @@
 			<th width="6%" align="center" bgcolor="#CCCCCC">Keluhan</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Diagnosa</th>
 			<th width="6%" align="center" bgcolor="#CCCCCC">Tindakan</th>
-			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Kunjungan</th>
+			<th width="6%" align="center" bgcolor="#CCCCCC">Tanggal Pendaftaran</th>
 		</tr>
 
 		<?php
@@ -47,7 +47,7 @@
 				<tr>
 					<td><?php echo $periksa['id_periksa']; ?></td>
 					<td><?php 
-					$pas = "SELECT * FROM kunjungan LEFT JOIN pasien ON pasien.no_rm=kunjungan.no_rm WHERE no_kunjungan = '".$periksa["no_kunjungan"]."'";
+					$pas = "SELECT * FROM pendaftaran LEFT JOIN pasien ON pasien.no_rm=pendaftaran.no_rm WHERE no_pendaftaran = '".$periksa["no_pendaftaran"]."'";
 					$pasDb = mysqli_query($server,$pas) or die("Query Error get pasien".mysqli_error());
 
 					$pasien = mysqli_fetch_assoc($pasDb);
